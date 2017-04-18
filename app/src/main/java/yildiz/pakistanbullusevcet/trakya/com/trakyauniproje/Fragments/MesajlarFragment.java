@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,26 +39,71 @@ public class MesajlarFragment extends Fragment {
     private MesajlarAdapter mMesajlarAdapter;
     private List<Mesaj> mMesajList;
 
-    private int alici_id = 27, gonderen_id = 25;
+    private Long alici_id, gonderen_id;
     private boolean alici_hoca_mi = false, gonderen_hoca_mi = false;
 
     private EditText mMesajIcerikEditText;
     private Button mMesajGonderButton;
 
+    private static final String EXTRA_DIGER_ID = "extra_diger_id";
+    private static final String EXTRA_DIGER_HOCA_MI = "extra_diger_hoca_mi";
+    private static final String EXTRA_GONDEREN_ID = "extra_gonderen_id";
+    private static final String EXTRA_GONDEREN_HOCA_MI = "extra_gonderen_hoca_mi";
+    private static final String EXTRA_ALICI_ID = "extra_alici_id";
+    private static final String EXTRA_ALICI_HOCA_MI = "extra_alici_hoca_mi";
 
-    public static MesajlarFragment newInstance() {
+
+    public static MesajlarFragment newInstance(Long alici_id, boolean alici_hoca_mi,
+                                               Long gonderen_id, boolean gonderen_hoca_mi,
+                                               Long diger_id, boolean diger_hoca_mi) {
 
         Bundle args = new Bundle();
+        args.putLong(EXTRA_ALICI_ID, alici_id);
+        args.putLong(EXTRA_GONDEREN_ID, gonderen_id);
+        args.putLong(EXTRA_DIGER_ID, diger_id);
+        args.putBoolean(EXTRA_ALICI_HOCA_MI, alici_hoca_mi);
+        args.putBoolean(EXTRA_GONDEREN_HOCA_MI, gonderen_hoca_mi);
+        args.putBoolean(EXTRA_DIGER_HOCA_MI, diger_hoca_mi);
 
         MesajlarFragment fragment = new MesajlarFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    private void MesajlasmaKisileriniAyarla() {
+        boolean extra_alici_hoca_mi = getArguments().getBoolean(EXTRA_ALICI_HOCA_MI);
+        boolean extra_gonderen_hoca_mi = getArguments().getBoolean(EXTRA_GONDEREN_HOCA_MI);
+        boolean extra_diger_hoca_mi = getArguments().getBoolean(EXTRA_DIGER_HOCA_MI);
+        Long extra_alici_id = getArguments().getLong(EXTRA_ALICI_ID);
+        Long extra_gonderen_id = getArguments().getLong(EXTRA_GONDEREN_ID);
+        Long extra_diger_id = getArguments().getLong(EXTRA_DIGER_ID);
+
+        if (extra_diger_id.equals(extra_alici_id) && extra_diger_hoca_mi == extra_alici_hoca_mi) {
+            alici_id = extra_alici_id;
+            alici_hoca_mi = extra_alici_hoca_mi;
+
+            gonderen_id = extra_diger_id;
+            gonderen_hoca_mi = extra_diger_hoca_mi;
+
+
+        } else if (extra_diger_id.equals(extra_gonderen_id) && extra_diger_hoca_mi == extra_gonderen_hoca_mi) {
+            gonderen_id = extra_alici_id;
+            gonderen_hoca_mi = extra_alici_hoca_mi;
+
+            alici_id = extra_diger_id;
+            alici_hoca_mi = extra_diger_hoca_mi;
+
+        } else {
+            throw new IllegalStateException();
+        }
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_mesajlasma, container, false);
+        MesajlasmaKisileriniAyarla();
         init(view);
 
         refreshMesajlar();
@@ -67,7 +113,7 @@ public class MesajlarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String mesajIcerik = mMesajIcerikEditText.getText().toString();
-                Call<Boolean> mesajGonderCall = service.mesajGonder(alici_id,alici_hoca_mi,gonderen_id,gonderen_hoca_mi,mesajIcerik);
+                Call<Boolean> mesajGonderCall = service.mesajGonder(alici_id, alici_hoca_mi, gonderen_id, gonderen_hoca_mi, mesajIcerik);
                 mesajGonderCall.enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {

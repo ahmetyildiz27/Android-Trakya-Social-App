@@ -6,27 +6,20 @@ package yildiz.pakistanbullusevcet.trakya.com.trakyauniproje.Models;
 
 public class Mesaj {
 
-    /**
-     * gonderen_id : 3
-     * gonderen_hoca_mi : false
-     * alici_id : 1
-     * alici_hoca_mi : false
-     * icerik : Kanki sana bişey dicem
-     * tarih : 1
-     */
 
-    private int gonderen_id;
+
+    private Long gonderen_id;
     private boolean gonderen_hoca_mi;
-    private int alici_id;
+    private Long alici_id;
     private boolean alici_hoca_mi;
     private String icerik;
     private Long tarih;
 
-    public int getGonderen_id() {
+    public Long getGonderen_id() {
         return gonderen_id;
     }
 
-    public void setGonderen_id(int gonderen_id) {
+    public void setGonderen_id(Long gonderen_id) {
         this.gonderen_id = gonderen_id;
     }
 
@@ -38,11 +31,11 @@ public class Mesaj {
         this.gonderen_hoca_mi = gonderen_hoca_mi;
     }
 
-    public int getAlici_id() {
+    public Long getAlici_id() {
         return alici_id;
     }
 
-    public void setAlici_id(int alici_id) {
+    public void setAlici_id(Long alici_id) {
         this.alici_id = alici_id;
     }
 

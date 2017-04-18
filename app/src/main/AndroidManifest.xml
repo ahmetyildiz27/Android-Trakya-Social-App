@@ -16,11 +16,11 @@
 
         </activity>
         <activity android:name=".Activities.OgrenciProfilActivity">
-
-
         </activity>
-        <activity android:name=".Activities.MesajlarActivity">
 
+        <activity android:name=".Activities.MesajlarActivity">
+        </activity>
+        <activity android:name=".Activities.MesajListesiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import yildiz.pakistanbullusevcet.trakya.com.trakyauniproje.Models.Mesaj;
+import yildiz.pakistanbullusevcet.trakya.com.trakyauniproje.Models.SonKonusmaMesaji;
 import yildiz.pakistanbullusevcet.trakya.com.trakyauniproje.Models.OgrenciProfil;
 
 /**
@@ -27,16 +28,24 @@ public interface RetrofitInterface {
 
     @FormUrlEncoded
     @POST("getMesajlar.php")
-    Call<List<Mesaj>> getMesajlar(@Field("alici_id") int alici_id,
+    Call<List<Mesaj>> getMesajlar(@Field("alici_id") Long alici_id,
                                   @Field("alici_hoca_mi") boolean alici_hoca_mi,
-                                  @Field("gonderen_id") int gonderen_id,
+                                  @Field("gonderen_id") Long gonderen_id,
                                   @Field("gonderen_hoca_mi") boolean gonderen_hoca_mi);
+
+
+    //kişinin mesajlaştığı kişilerin listesi son mesajı tarihi ve içeriği
+    @FormUrlEncoded
+    @POST("getMesajlarListesi.php")
+    Call<List<SonKonusmaMesaji>> getMesajlarListesi(@Field("id") Long id,
+                                                    @Field("hoca_mi") boolean hoca_mi);
+
 
     @FormUrlEncoded
     @POST("mesajGonder.php")
-    Call<Boolean> mesajGonder (@Field("alici_id") int alici_id,
-                                 @Field("alici_hoca_mi") boolean alici_hoca_mi,
-                                 @Field("gonderen_id") int gonderen_id,
-                                 @Field("gonderen_hoca_mi") boolean gonderen_hoca_mi,
-                                 @Field("mesaj_icerik") String mesaj_icerik);
+    Call<Boolean> mesajGonder(@Field("alici_id") Long alici_id,
+                              @Field("alici_hoca_mi") boolean alici_hoca_mi,
+                              @Field("gonderen_id") Long gonderen_id,
+                              @Field("gonderen_hoca_mi") boolean gonderen_hoca_mi,
+                              @Field("mesaj_icerik") String mesaj_icerik);
 }
