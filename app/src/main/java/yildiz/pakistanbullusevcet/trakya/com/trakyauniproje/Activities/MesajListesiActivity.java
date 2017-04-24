@@ -12,6 +12,6 @@ public class MesajListesiActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         //şimdilik 5 numaralı ve hoca olan kişiye...
-        return MesajListesiFragment.newInstance(5l, true);
+        return MesajListesiFragment.newInstance(6l, false);
     }
 }
