@@ -13,10 +13,15 @@
         android:text="GİRİŞ YAP EKRANI"/>
 
     <Button
+        android:id="@+id/buttonOgrenciProfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonOgrenciProfil"
-        android:text="ÖĞRENCİ PROFİL"/>
+        android:text="ÖĞRENCİ PROFİL" />
+    <Button
+        android:id="@+id/buttonMesajlarListesi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mesajlar Listesi" />
 
     <Button
         android:layout_width="match_parent"
